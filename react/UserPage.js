@@ -9,17 +9,26 @@ export default class UserPage extends React.Component {
 
     constructor(props){
         super(props);
-        this.getUser();
-        this.getPosts();
+        this.state = {
+            user: {
+                name: "",
+                phone: "",
+                email: ""
+            }
+        };
     }
 
-    getUser() {
-        this.user = {
-            name: "Roy Peled",
-            email: "roy@peled.com",
-            phone: "555-0816"
+    shouldComponentUpdate(nextProps, nextState) {
+        let shouldUpdate = (nextProps.selectedUser ? true : false);
+        if (shouldUpdate) {
+            this.setState({
+                user: nextProps.selectedUser
+            });
         }
+
+        return shouldUpdate;
     }
+
 
     getPosts(){
         this.posts = [
@@ -32,7 +41,7 @@ export default class UserPage extends React.Component {
 
     render(){
         return (<main className="user-page">
-                    <UserDetails user={ this.user }/>
+                    <UserDetails user={ this.state.user }/>
                     <UserPosts posts={ this.posts }/>
                 </main>)
     }

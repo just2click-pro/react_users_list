@@ -6,26 +6,18 @@ export default class UsersList extends React.Component {
 
     constructor(props){
         super(props);
-        this.getUsers();
-    }
-
-    getUsers(){
-        this.users = [
-            {name: "Roy Peled"},
-            {name: "Peter Parker"},
-            {name: "Tony Stark"},
-        ];
     }
 
     renderUser(user){
-        return <li>{ user.name }</li>
+        return <li key={user.id} onClick={ ()=> this.props.onUserSelected(user) } className="selectable">{ user.name }</li>;
     }
 
     render(){
-        return (<nav className="users-list">
+        return (
+            <nav className="users-list">
                     <h3>Users List</h3>
                     <ul>
-                        { this.users.map(this.renderUser) }
+                        { this.props.users.map(this.renderUser.bind(this)) }
                     </ul>
                 </nav>)
     }
