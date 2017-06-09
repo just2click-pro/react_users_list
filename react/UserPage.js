@@ -1,6 +1,7 @@
 import React from "react";
 import UserDetails from "./UserDetails";
-import UserPosts from "./UserPosts"
+import UserPosts from "./UserPosts";
+import PostsService from "./PostsService";
 
 import "./user-page.scss";
 
@@ -14,8 +15,18 @@ export default class UserPage extends React.Component {
                 name: "",
                 phone: "",
                 email: ""
-            }
+            },
+            posts: []
         };
+    }
+
+    getUsersPosts(user) {
+        PostsService.getPosts(user.id)
+            .then((response) => {
+                this.setState({
+                    posts: response
+                });
+            });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -24,25 +35,17 @@ export default class UserPage extends React.Component {
             this.setState({
                 user: nextProps.selectedUser
             });
+            this.getUsersPosts(nextProps.selectedUser);
         }
 
         return shouldUpdate;
     }
 
-
-    getPosts(){
-        this.posts = [
-            {title: "hello", body: "world"},
-            {title: "lorem", body: "ipsum"},
-            {title: "whats", body: "up"},
-            {title: "foo", body: "bar"}
-        ];
-    }
-
     render(){
         return (<main className="user-page">
                     <UserDetails user={ this.state.user }/>
-                    <UserPosts posts={ this.posts }/>
+                    <hr />
+                    <UserPosts posts={ this.state.posts }/>
                 </main>)
     }
 }

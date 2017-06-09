@@ -27,8 +27,9 @@ export default class App extends React.Component {
   	UserService.getAllUsers()
   		.then((response) => {
 				this.setState({
-					users: response
-			});
+					users: response,
+				});
+				this.selectUser(response[0]);
 		});
 	}
 
