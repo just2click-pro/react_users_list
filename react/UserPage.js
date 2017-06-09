@@ -18,7 +18,7 @@ export default class UserPage extends React.Component {
         };
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
+    componentWillReceiveProps(nextProps) {
         let shouldUpdate = (nextProps.selectedUser ? true : false);
         if (shouldUpdate) {
             this.setState({
